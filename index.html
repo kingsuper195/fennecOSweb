@@ -1,14 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html style="margin: 0; padding: 0;">
 
 <head>
-
+    <script type="module" src="./script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
-<body style="color: white; background-color: black; font-family: sans-serif;">
-    <h1>Welcome to FennecOS webEdition v3.14</h1>
-    <p>FennecOS webEdition is a mock-up gui version of the true FennecOS that is yet to be created.</p>
-    <img style="width:10em; height:10em; border-radius: 5%; object-fit: cover;" src="foxes.png" />
+<body>
+    <div id="topbar">
+        <p id="welcomeopen">FennecOS</p>
+        <p id="time">6/24/2025 2:31 AM</p>
+    </div>
+    <!-- https://commons.wikimedia.org/wiki/File:2-Fennec-Foxes-7-18-09-Tad-Motoyama-.-.jpg -->
+    <div id="welcome">
+        <div id="welcomeheader">
+            <p style="margin-left: 0.5em;">
+                Welcome
+            </p>
+            <p id="welcomeclose">X</p>
+        </div>
+        <h1 style="padding:0.25em">Welcome to FennecOS webEdition v3.14</h1>
+        <p style="padding:0.25em">FennecOS webEdition is a mock-up gui version of the true FennecOS that is yet to be
+            created.</p>
+        <!-- https://commons.wikimedia.org/wiki/File:Fennec_Fox_Peek.jpg -->
+        <img id="icon" src="foxes.png" />
+    </div>
 </body>
 
 </html>
