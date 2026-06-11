@@ -1,38 +1,47 @@
-setInterval(updateTime, 1000);
-dragElement(document.getElementById("welcome"));
-dragElement(document.getElementById("pocketwatch"))
-
+updateTime();
 let biggestIndex = 1;
-let selectedIcon = null;
-let topBar = document.querySelector("#topbar")
+let topBar = document.querySelector("#topbar");
 
-let welcomeScreen = document.querySelector("#welcome");
-document.querySelector("#welcomeclose").addEventListener("click", function () {
-    closeWindow(welcomeScreen);
-});
+initWindow("welcome")
+initWindow("pocketwatch", true)
 
-document.querySelector("#welcomeopen").addEventListener("click", function () {
-    openWindow(welcomeScreen);
-});
-addWindowTapHandling(welcomeScreen);
+setInterval(updateTime, 1000);
 
-let pocketWatchScreen = document.querySelector("#pocketwatch");
-document.querySelector("#pocketwatchclose").addEventListener("click", function () {
-    closeWindow(pocketWatchScreen);
-    unselectIcon(pocketWatchIcon);
-});
 
-let pocketWatchIcon = document.querySelector("#pocketwatchicon")
-pocketWatchIcon.addEventListener("mousedown", () => {
-    handleIconTap(pocketWatchIcon, pocketWatchScreen)
-});
+function initWindow(name, useIcon = false) {
+    let icon;
+    if (useIcon) { icon = document.querySelector(`#${name}icon`) };
+    let screen = document.querySelector(`#${name}`);
+    if (useIcon) {
+        document.querySelector(`#${name}close`).addEventListener("click", function () {
+            closeWindow(screen);
+            unselectIcon(icon);
+        });
+    } else {
+        document.querySelector(`#${name}close`).addEventListener("click", function () {
+            closeWindow(screen);
+        });
+    }
 
-addWindowTapHandling(pocketWatchScreen);
+    if (useIcon) {
+        icon.addEventListener("mousedown", () => {
+            handleIconTap(icon, screen);
+        });
+    } else {
+        document.querySelector(`#${name}open`).addEventListener("click", function () {
+            openWindow(screen);
+        });
+    }
+
+    addWindowTapHandling(screen);
+    dragElement(document.querySelector(`#${name}`));
+}
+
 
 function addWindowTapHandling(element) {
-    element.addEventListener("mousedown", () =>
-        handleWindowTap(element)
-    )
+    element.addEventListener("mousedown", () => {
+        handleWindowTap(element);
+    });
 }
 
 function handleWindowTap(element) {
@@ -43,12 +52,10 @@ function handleWindowTap(element) {
 
 function selectIcon(element) {
     element.classList.add("selected");
-    selectedIcon = element;
 }
 
 function unselectIcon(element) {
     element.classList.remove("selected");
-    selectedIcon = null;
 }
 
 function handleIconTap(element, window) {
@@ -67,7 +74,7 @@ function closeWindow(element) {
 
 function openWindow(element) {
     element.style.display = "block";
-    handleWindowTap(element)
+    handleWindowTap(element);
 }
 
 function dragElement(element) {
@@ -76,8 +83,8 @@ function dragElement(element) {
     let currentX = 0;
     let currentY = 0;
 
-    if (document.getElementById(element.id + "header")) {
-        document.getElementById(element.id + "header").onmousedown = startDragging;
+    if (document.querySelector(`#${element.id}header`)) {
+        document.querySelector(`#${element.id}header`).onmousedown = startDragging;
     } else {
         element.onmousedown = startDragging;
     }
@@ -109,7 +116,21 @@ function dragElement(element) {
 }
 
 function updateTime() {
-    let currentTime = new Date().toLocaleString();
+    // https://www.geeksforgeeks.org/javascript/how-to-create-analog-clock-using-html-css-and-javascript/
+    let now = new Date()
+    let currentTime = now.toLocaleString();
     let timeText = document.querySelector("#time");
     timeText.innerHTML = currentTime;
+
+    const seconds = now.getSeconds();
+    const minutes = now.getMinutes();
+    const hours = now.getHours();
+
+    const secondDeg = ((seconds / 60) * 360) + 90;
+    const minuteDeg = ((minutes / 60) * 360) + 90;
+    const hourDeg = ((hours / 12) * 360) + 90;
+
+    document.querySelector("#second-hand").style.transform = `rotate(${secondDeg}deg)`;
+    document.querySelector("#minute-hand").style.transform = `rotate(${minuteDeg}deg)`;
+    document.querySelector("#hour-hand").style.transform = `rotate(${hourDeg}deg)`;
 }
