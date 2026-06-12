@@ -1,9 +1,39 @@
 updateTime();
 let biggestIndex = 1;
 let topBar = document.querySelector("#topbar");
+let notesGet = localStorage.getItem("notes");
+let notesContent;
+if (notesGet !== null) {
+    notesContent = JSON.parse(notesGet);
+} else {
+    notesContent = [
+        {
+            title: "Welcome",
+            content: `Hello.`,
+        }
+    ];
+}
+
+
+let currentNoteContent = null;
+
+setNoteContent(0)
+for (let i = 0; i < notesContent.length; i++) {
+    addToSideBar(i);
+}
+
+document.querySelector("#new").addEventListener("mousedown", () => {
+    let count = notesContent.push({ title: "New Note", content: "" });
+    addToSideBar(count - 1)
+});
+
+document.querySelector("#save").addEventListener("mousedown", () => {
+    setNoteContent(currentNoteContent)
+});
 
 initWindow("welcome")
 initWindow("pocketwatch", true)
+initWindow("notes", true)
 
 setInterval(updateTime, 1000);
 
@@ -113,6 +143,37 @@ function dragElement(element) {
         document.onmouseup = null;
         document.onmousemove = null;
     }
+}
+
+function setNoteContent(content) {
+    let div = document.querySelector("#notecontent");
+    if (currentNoteContent !== null) {
+        notesContent[currentNoteContent].content = div.innerHTML
+    }
+    div.innerHTML = notesContent[content].content;
+    let title = document.querySelector("#notetitle")
+    if (currentNoteContent !== null) {
+        notesContent[currentNoteContent].title = title.innerHTML
+        document.querySelector(`#sb${currentNoteContent}`).innerHTML = notesContent[currentNoteContent].title
+    }
+    title.innerHTML = notesContent[content].title
+    currentNoteContent = content;
+    localStorage.setItem("notes", JSON.stringify(notesContent));
+}
+
+function addToSideBar(index) {
+    let sidebar = document.querySelector("#barcontent");
+    let note = notesContent[index];
+    let newDiv = document.createElement("div");
+    newDiv.innerHTML = `
+    <p id="sb${index}" class="baritem">
+      ${note.title}
+    </p>
+    `;
+    newDiv.addEventListener("click", function () {
+        setNoteContent(index);
+    });
+    sidebar.appendChild(newDiv);
 }
 
 function updateTime() {

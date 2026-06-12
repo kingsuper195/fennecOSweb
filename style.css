@@ -71,6 +71,7 @@ body {
 }
 
 #desktopApps {
+    display: flex;
     padding-top: 64px;
     padding-left: 16px;
 }
@@ -96,6 +97,31 @@ body {
 #pocketwatch {
     display: none;
     text-align: center;
+}
+
+#notes {
+    display: none;
+}
+
+#bar {
+    width: 100%;
+    border-top: 2px white solid;
+    display: flex;
+}
+
+#barcontent {
+    display: flex;
+}
+
+.baritem {
+    margin: 0px;
+    cursor: pointer;
+    border-left: 1px white solid;
+    border-right: 1px white solid;
+}
+
+#save {
+    margin-left: auto;
 }
 
 #pocketwatch img {

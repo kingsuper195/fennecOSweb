@@ -21,6 +21,11 @@
             <img src="pocketwatch.png" id="pocketwatchicon" class="icon" />
             <p style="margin:0;">Pocket Watch</p>
         </div>
+        <div class="desktopApp">
+            <!-- https://upload.wikimedia.org/wikipedia/commons/e/e0/Accessories-text-editor.svg -->
+            <img src="notes.png" id="notesicon" class="icon" />
+            <p style="margin:0;">Notetaker</p>
+        </div>
     </div>
     <!-- https://commons.wikimedia.org/wiki/File:2-Fennec-Foxes-7-18-09-Tad-Motoyama-.-.jpg -->
     <div id="welcome" class="window">
@@ -49,6 +54,30 @@
         <div class="hand" id="minute-hand"></div>
         <div class="hand" id="second-hand"></div>
     </div>
+
+    <div id="notes" class="window">
+        <div id="notesheader" class="header">
+            <p style="margin-left: 0.5em;">
+                Notes
+            </p>
+            <p id="notesclose" class="close">X</p>
+        </div>
+        <div>
+            <div>
+                <div>
+                    <h3 contenteditable="true" id="notetitle" style="margin: 0px;"></h3>
+                </div>
+
+                <div style="overflow-y: auto; width:50em; max-height: 30em;">
+                    <p id="notecontent" contenteditable="true"></p>
+                </div>
+                <div id="bar">
+                    <div id="barcontent"></div>
+                    <p id="save" class="baritem">Save</p>
+                    <p id="new" class="baritem">+</p>
+                </div>
+            </div>
+        </div>
 </body>
 
 </html>
